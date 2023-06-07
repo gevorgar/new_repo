@@ -18,7 +18,7 @@ class Warrior:
         return f'Name: {self.name}, HP: {self.hp}, Attack: {self.attack}'
 
 class Archer(Warrior):
-    attack = 5
+    attack = 10
     protection = 6
     critical_damage = 2
     critical_chance = 20
@@ -51,33 +51,30 @@ class Magician(Warrior):
 
 class Game:
 
-    def fight(self, other):
-        if isinstance(Warrior):
-            pass
+    @classmethod
+    def fight(self, unit_1, unit_2):
+        if isinstance(unit_1, Warrior) and (unit_2, Warrior):
+            while unit_1.hp > 0 and unit_2.hp > 0:
+                print(f'Hit {unit_1.name} HP: {unit_2.hp}')
+                unit_2.hp -= unit_1.attack
+                print(f'Hit {unit_2.name} HP: {unit_2.hp}')
+                unit_1.hp -= unit_2.attack
 
-    def is_fight_end(self, other):
-        if self.hp > other.hp:
-            return print(f'Win {self.name} HP: {self.hp}')
+    @classmethod
+    def is_fight_end(self, unit_1, unit_2):
+        if unit_1.hp > unit_2.hp:
+            return print(f'Win {unit_1.name} HP: {unit_1.hp}')
         else:
-            return print(f'Win {other.name} HP: {other.hp}')
+            return print(f'Win {unit_2.name} HP: {unit_2.hp}')
 
 
-unit1 = Archer('Player')
+unit1 = Archer('Player 1')
 unit2 = Swordsman('player 2')
 
 
 print(unit2 > unit1)
-unit1.fight(unit2)
 
+new_game = Game()
+fight_1 = new_game.fight(unit1, unit2)
+result = new_game.is_fight_end(unit1, unit2)
 
-# def fight(self, other):
-#     if isinstance(Warrior):
-#         while other.hp > 0 and self.hp > 0:
-#             print(f'Hit {self.name} HP: {self.hp}')
-#             other.hp -= self.attack
-#             print(f'Hit {other.name} HP: {other.hp}')
-#             self.hp -= other.attack
-#         if self.hp > other.hp:
-#             return print(f'Win {self.name} HP: {self.hp}')
-#         else:
-#             return print(f'Win {other.name} HP: {other.hp}')
