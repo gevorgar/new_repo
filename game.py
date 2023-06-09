@@ -50,31 +50,48 @@ class Magician(Warrior):
         other.hp -= self.attack
 
 class Game:
+    @staticmethod
+    def warrior_choice(player_number):
+        print(f'Игрок {player_number} - Выбор воина: ')
+        user_input = int(input(
+            'Введите "1" для выбора "Лучника"\nВведите "2" для выбора "Мечника"\nВведите "3" для выбора "Мага"\n'))
+        unit_name = input('Введите имя для вашего воина: ')
+        if user_input == 1:
+            return Archer(unit_name)
+        elif user_input == 2:
+            return Swordsman(unit_name)
+        elif user_input == 3:
+            return Magician(unit_name)
+        else:
+            print('Ошибка! Неверный ввод! Повторите!')
+            # return warrior_choice(player_number)
 
-    @classmethod
-    def fight(self, unit_1, unit_2):
+
+    @staticmethod
+    def fight(unit_1, unit_2):
+        print(f'Начало сражения: {unit_1.name} c {unit_2.name}')
         if isinstance(unit_1, Warrior) and (unit_2, Warrior):
             while unit_1.hp > 0 and unit_2.hp > 0:
-                print(f'Hit {unit_1.name} HP: {unit_2.hp}')
+                print(f'Hit {unit_1.name} HP: {unit_1.hp}')
                 unit_2.hp -= unit_1.attack
                 print(f'Hit {unit_2.name} HP: {unit_2.hp}')
                 unit_1.hp -= unit_2.attack
 
-    @classmethod
-    def is_fight_end(self, unit_1, unit_2):
+    @staticmethod
+    def is_fight_end(unit_1, unit_2):
         if unit_1.hp > unit_2.hp:
             return print(f'Win {unit_1.name} HP: {unit_1.hp}')
         else:
             return print(f'Win {unit_2.name} HP: {unit_2.hp}')
 
 
-unit1 = Archer('Player 1')
-unit2 = Swordsman('player 2')
 
 
-print(unit2 > unit1)
 
-new_game = Game()
-fight_1 = new_game.fight(unit1, unit2)
-result = new_game.is_fight_end(unit1, unit2)
+unit1 = Game.warrior_choice(1)
+unit2 = Game.warrior_choice(2)
+
+
+fight_1 = Game.fight(unit1, unit2)
+result = Game.is_fight_end(unit1, unit2)
 
