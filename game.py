@@ -4,6 +4,7 @@ class Warrior:
 
     def __init__(self, name):
         self.name = name
+        self.wins = 0
 
     def __eq__(self, other):
         return self.hp == other.hp
@@ -80,18 +81,23 @@ class Game:
     @staticmethod
     def is_fight_end(unit_1, unit_2):
         if unit_1.hp > unit_2.hp:
+            unit_1.wins += 1
             return print(f'Win {unit_1.name} HP: {unit_1.hp}')
         else:
+            unit_2.wins += 1
             return print(f'Win {unit_2.name} HP: {unit_2.hp}')
-
-
-
 
 
 unit1 = Game.warrior_choice(1)
 unit2 = Game.warrior_choice(2)
 
 
-fight_1 = Game.fight(unit1, unit2)
-result = Game.is_fight_end(unit1, unit2)
+while True:
+    fight_1 = Game.fight(unit1, unit2)
+    result = Game.is_fight_end(unit1, unit2)
+    print(f'Результат: {unit1.name}:{unit1.wins} - {unit2.name}:{unit2.wins}')
+    play_again = input('Играем еще раз? Введите "Да" если хотите сыграть еще: ').lower()
+    if play_again != 'да':
+        break
+
 
