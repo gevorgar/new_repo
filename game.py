@@ -8,7 +8,6 @@ class Warrior:
 
     def __init__(self, name):
         self.name = name
-        self.wins = 0
 
     def __eq__(self, other):
         return self.hp == other.hp
