@@ -21,10 +21,11 @@ class Warrior:
     def get_info(self):
         return f'Name: {self.name}, HP: {self.hp}, Attack: {self.attack}'
 
-    def hit(self, other):
+    def __sub__(self, other):
         if isinstance(other, Warrior):
-            print(f'Hit {self.name} HP: {self.hp}')
-            other.hp -= random.randint(self.attack, self.critical_damage)
+            print(f'Удар {other.name} HP: {other.hp} по {self.name} HP: {self.hp}')
+            self.hp -= random.randint(other.attack, other.critical_damage)
+            return self.hp
 
 class Archer(Warrior):
     attack = 10
@@ -55,7 +56,6 @@ class Game:
             print(f'Игрок {player_number} - Выбор воина: ')
             user_input = int(input(
                 'Введите "1" для выбора "Лучника"\nВведите "2" для выбора "Мечника"\nВведите "3" для выбора "Мага"\n'))
-            # unit_name = input('Введите имя для вашего воина: ')
             if user_input == 1:
                 return Archer(player_number)
             elif user_input == 2:
@@ -74,8 +74,8 @@ class Game:
             return print('Передан неверный параметр')
         else:
             while unit_1.hp > 0 and unit_2.hp > 0:
-                unit_1.hit(unit_2)
-                unit_2.hit(unit_1)
+                unit_2 - unit_1
+                unit_1 - unit_2
 
     @staticmethod
     def is_fight_end(unit_1, unit_2):
@@ -103,3 +103,8 @@ while True:
         break
 
 
+# unit1 = Swordsman('unit1')
+# unit2 = Archer('unit2')
+#
+# print(unit1 - unit2)
+# print(unit1.hp)
