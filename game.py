@@ -23,6 +23,12 @@ class Warrior:
 
     def __sub__(self, other):
         if isinstance(other, Warrior):
+            if isinstance(self, Archer) and isinstance(other, Swordsman):
+                self.attack += round(self.attack * 0.1)
+            elif isinstance(self, Swordsman) and isinstance(other, Magician):
+                self.attack += round(self.attack * 0.1)
+            elif isinstance(self, Magician) and isinstance(other, Archer):
+                self.attack += round(self.attack * 0.1)
             print(f'Удар {other.name} HP: {other.hp} по {self.name} HP: {self.hp}')
             self.hp -= random.randint(other.attack, other.critical_damage)
             return self.hp
@@ -34,7 +40,7 @@ class Archer(Warrior):
     critical_chance = 30
 
 class Swordsman(Warrior):
-    attack = 15
+    attack = 20
     protection = 7
     critical_damage = 30
     critical_chance = 35
@@ -47,8 +53,8 @@ class Magician(Warrior):
 
 
 class Game:
-    unit1_wins = 0
-    unit2_wins = 0
+    __unit1_wins = 0
+    __unit2_wins = 0
 
     @staticmethod
     def warrior_choice(player_number):
@@ -65,8 +71,6 @@ class Game:
             else:
                 print('Ошибка! Неверный ввод! Повторите!')
 
-
-
     @staticmethod
     def fight(unit_1, unit_2):
         print(f'Начало сражения: {unit_1.name} c {unit_2.name}')
@@ -76,35 +80,25 @@ class Game:
             while unit_1.hp > 0 and unit_2.hp > 0:
                 unit_2 - unit_1
                 unit_1 - unit_2
-
-    @staticmethod
-    def is_fight_end(unit_1, unit_2):
         if unit_1.hp > unit_2.hp:
-            Game.unit1_wins += 1
-            return print(f'Win {unit_1.name} HP: {unit_1.hp}')
+            Game.__unit1_wins += 1
+            return print(f'Win {unit_1.name} HP: {unit_1.hp}\nСчет: {unit_1.name}:{Game.__unit1_wins} - {unit2.name}:{Game.__unit2_wins} ')
         else:
-            Game.unit2_wins += 1
-            return print(f'Win {unit_2.name} HP: {unit_2.hp}')
+            Game.__unit2_wins += 1
+            return print(f'Win {unit_2.name} HP: {unit_2.hp}\nСчет: {unit_1.name}:{Game.__unit1_wins} - {unit2.name}:{Game.__unit2_wins}')
 
 
 
+
+game1 = Game()
 unit1_name = input('Введите имя для первого игрока: ')
 unit2_name = input('Введите имя второго игрока: ')
 
+
 while True:
-    unit1 = Game.warrior_choice(unit1_name)
-    unit2 = Game.warrior_choice(unit2_name)
-    fight_1 = Game.fight(unit1, unit2)
-    result = Game.is_fight_end(unit1, unit2)
-    print(f'Результат: {unit1_name}:{Game.unit1_wins} - {unit2_name}:{Game.unit2_wins}')
+    unit1 = game1.warrior_choice(unit1_name)
+    unit2 = game1.warrior_choice(unit2_name)
+    fight_1 = game1.fight(unit1, unit2)
     play_again = input('Играем еще раз? Введите "Да" если хотите сыграть еще: ').lower()
     if play_again != 'да':
-        print(f'Игра окончена! Результат {unit1_name}:{Game.unit1_wins} - {unit2_name}:{Game.unit2_wins}')
         break
-
-
-# unit1 = Swordsman('unit1')
-# unit2 = Archer('unit2')
-#
-# print(unit1 - unit2)
-# print(unit1.hp)
