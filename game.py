@@ -95,6 +95,7 @@ unit1_name = input('Введите имя для первого игрока: ')
 unit2_name = input('Введите имя второго игрока: ')
 
 
+
 while True:
     unit1 = game1.warrior_choice(unit1_name)
     unit2 = game1.warrior_choice(unit2_name)
