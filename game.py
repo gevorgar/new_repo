@@ -53,7 +53,7 @@ class Magician(Warrior):
 
 
 class Game:
-    __unit1_wins = 0
+    __player_wins = 0
     __unit2_wins = 0
 
     @staticmethod
@@ -81,25 +81,42 @@ class Game:
                 unit_2 - unit_1
                 unit_1 - unit_2
         if unit_1.hp > unit_2.hp:
-            Game.__unit1_wins += 1
-            return print(f'Win {unit_1.name} HP: {unit_1.hp}\nСчет: {unit_1.name}:{Game.__unit1_wins} - {unit2.name}:{Game.__unit2_wins} ')
+            Game.__player_wins += 1
+            return print(f'Win {unit_1.name} HP: {unit_1.hp}\nСчет: {unit_1.name}:{Game.__player_wins} - {unit2.name}:{Game.__unit2_wins} ')
         else:
             Game.__unit2_wins += 1
-            return print(f'Win {unit_2.name} HP: {unit_2.hp}\nСчет: {unit_1.name}:{Game.__unit1_wins} - {unit2.name}:{Game.__unit2_wins}')
+            return print(f'Win {unit_2.name} HP: {unit_2.hp}\nСчет: {unit_1.name}:{Game.__player_wins} - {unit2.name}:{Game.__unit2_wins}')
 
+class Queue:
+    first_player_list =[]
+    second_player_list =[]
 
 
 
 game1 = Game()
-unit1_name = input('Введите имя для первого игрока: ')
-unit2_name = input('Введите имя второго игрока: ')
+player1_name = input('Введите имя для первого игрока: ')
+player2_name = input('Введите имя второго игрока: ')
+game_mode = int(input('Выберите режим игры. Введите "1" или "5"'))
 
-
-
-while True:
-    unit1 = game1.warrior_choice(unit1_name)
-    unit2 = game1.warrior_choice(unit2_name)
+if game_mode == 1:
+    unit1 = game1.warrior_choice(player1_name)
+    unit2 = game1.warrior_choice(player2_name)
     fight_1 = game1.fight(unit1, unit2)
-    play_again = input('Играем еще раз? Введите "Да" если хотите сыграть еще: ').lower()
-    if play_again != 'да':
-        break
+elif game_mode == 5:
+    for i in range(5):
+        unit1 = game1.warrior_choice(player1_name)
+        Queue.first_player_list.append(unit1)
+    for i in range(5):
+        unit2 = game1.warrior_choice(player2_name)
+        Queue.second_player_list.append(unit2)
+
+
+
+
+# while True:
+#     unit1 = game1.warrior_choice(player1_name)
+#     unit2 = game1.warrior_choice(player2_name)
+#     fight_1 = game1.fight(unit1, unit2)
+#     play_again = input('Играем еще раз? Введите "Да" если хотите сыграть еще: ').lower()
+#     if play_again != 'да':
+#         break
