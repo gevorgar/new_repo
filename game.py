@@ -1,4 +1,4 @@
-import random
+import random, collections
 
 class Warrior:
     hp = 100
@@ -87,9 +87,9 @@ class Game:
             Game.__unit2_wins += 1
             return print(f'Win {unit_2.name} HP: {unit_2.hp}\nСчет: {unit_1.name}:{Game.__player_wins} - {unit2.name}:{Game.__unit2_wins}')
 
-class Queue:
-    first_player_list =[]
-    second_player_list =[]
+
+first_player_list = collections.deque()
+second_player_list =collections.deque()
 
 
 
@@ -105,13 +105,16 @@ if game_mode == 1:
 elif game_mode == 5:
     for i in range(5):
         unit1 = game1.warrior_choice(player1_name)
-        Queue.first_player_list.append(unit1)
+        first_player_list.append(unit1)
     for i in range(5):
         unit2 = game1.warrior_choice(player2_name)
-        Queue.second_player_list.append(unit2)
+        second_player_list.append(unit2)
+else:
+    print('Неверный ввод')
 
 
-
+for unit in range(5):
+    fight = game1.fight(first_player_list.popleft(), second_player_list.popleft())
 
 # while True:
 #     unit1 = game1.warrior_choice(player1_name)
